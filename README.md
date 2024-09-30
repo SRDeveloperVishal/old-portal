@@ -1,4 +1,4 @@
 # old-portal
-OpenEdx without api script
+OpenEdx without API Script
 
 ./old-portal/portal.sh

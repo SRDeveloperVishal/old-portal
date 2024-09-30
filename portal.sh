@@ -24,16 +24,16 @@
       # take input from user
       echo "Enter LMS_HOST Name:"
       read LMS_HOST
-      # echo "Enter Course Email:"
-      # read COURSE_EMAIL
+      echo "Enter Course Email:"
+      read COURSE_EMAIL
     #   echo "Enter SMTP HOST:"
     #   read SMTP_HOST
       echo "Enter SMTP USERNAME:"
       read SMTP_USERNAME
       echo "Enter SMTP PASSWORD:"
       read SMTP_PASSWORD
-      echo "Enter CONTACT EMAIL:"
-      read CONTACT_EMAIL
+      # echo "Enter CONTACT EMAIL:"
+      # read CONTACT_EMAIL
 
       # tutor plugins
       tutor plugins enable forum && tutor config save

@@ -32,8 +32,8 @@
       read SMTP_USERNAME
       echo "Enter SMTP PASSWORD:"
       read SMTP_PASSWORD
-    #   echo "Enter CONTACT EMAIL:"
-    #   read CONTACT_EMAIL
+      echo "Enter CONTACT EMAIL:"
+      read CONTACT_EMAIL
 
       # tutor plugins
       tutor plugins enable forum && tutor config save

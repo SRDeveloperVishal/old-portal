@@ -64,7 +64,7 @@
 
       # update lms and lms worker docker image
       YAML_FILE=".local/share/tutor/env/local/docker-compose.yml"
-      NEW_IMAGE="7503444967/maple-edx-server:volume-final.1.4"
+      NEW_IMAGE="7503444967/maple-edx-server:volume-final.1.5-without-pmmmt"
 
       # Use sed to replace the image line for the 'lms' service
       sed -i "/^ *lms:/,/^ *[^ ]/ s|image: docker.io/overhangio/openedx:13.1.5|image: $NEW_IMAGE|" "$YAML_FILE"  
@@ -121,8 +121,8 @@
       # take input from user
       echo "Enter LMS_HOST Name:"
       read LMS_HOST
-      # echo "Enter Course Email:"
-      # read COURSE_EMAIL
+      echo "Enter Course Email:"
+      read COURSE_EMAIL
     #   echo "Enter SMTP HOST:"
     #   read SMTP_HOST
       echo "Enter SMTP USERNAME:"
@@ -161,7 +161,7 @@
 
       # update lms and lms worker docker image
       YAML_FILE=".local/share/tutor/env/local/docker-compose.yml"
-      NEW_IMAGE="7503444967/maple-edx-server:volume-final.1.4"
+      NEW_IMAGE="7503444967/maple-edx-server:volume-final.1.5-without-pmmmt"
 
       # Use sed to replace the image line for the 'lms' service
       sed -i "/^ *lms:/,/^ *[^ ]/ s|image: docker.io/overhangio/openedx:13.1.5|image: $NEW_IMAGE|" "$YAML_FILE"  

@@ -1,4 +1,4 @@
-  #!/bin/bash
+ #!/bin/bash
 
   if command -v docker &> /dev/null ; then
       #remove docker images
@@ -56,22 +56,27 @@
       sudo apt-get install jq -y
       jq --arg COURSE_EMAIL "$COURSE_EMAIL" '. | . + { "COURSE_EMAIL": $COURSE_EMAIL }' "$lms_env_file" > tmp.json && mv tmp.json "$lms_env_file"
 
-      #tutor build 
+      # Fix: github.com/edx/* repos moved to github.com/openedx/*
+      echo "Fixing edx -> openedx GitHub URLs in Dockerfiles..."
+      find "$(tutor config printroot)/env" -name "Dockerfile" -exec \
+        sed -i 's|github\.com/edx/|github.com/openedx/|g' {} +
+
+      #tutor build
       tutor local start -d
 
       # tutor migrate
-      tutor local init 
+      tutor local init
 
       # update lms and lms worker docker image
       YAML_FILE=".local/share/tutor/env/local/docker-compose.yml"
       NEW_IMAGE="7503444967/maple-edx-server:volume-final.1.5-without-pmmmt"
 
       # Use sed to replace the image line for the 'lms' service
-      sed -i "/^ *lms:/,/^ *[^ ]/ s|image: docker.io/overhangio/openedx:13.1.5|image: $NEW_IMAGE|" "$YAML_FILE"  
-      sed -i "/^ *lms-worker:/,/^ *[^ ]/ s|image: docker.io/overhangio/openedx:13.1.5|image: $NEW_IMAGE|" "$YAML_FILE" 
+      sed -i "/^ *lms:/,/^ *[^ ]/ s|image: docker.io/overhangio/openedx:13.1.5|image: $NEW_IMAGE|" "$YAML_FILE"
+      sed -i "/^ *lms-worker:/,/^ *[^ ]/ s|image: docker.io/overhangio/openedx:13.1.5|image: $NEW_IMAGE|" "$YAML_FILE"
 
-      # tutor settheme 
-      tutor local settheme edx-reborn-indigo 
+      # tutor settheme
+      tutor local settheme edx-reborn-indigo
 
       # tutor restart
       tutor local stop && tutor local start -d
@@ -80,7 +85,7 @@
       echo "Work complete your $LMS_HOST portal is ready"
       echo "Thank you !!"
 
-  
+
   else
       # Update the package cache
       sudo apt-get update
@@ -153,22 +158,27 @@
       # Add Course Email
       jq --arg COURSE_EMAIL "$COURSE_EMAIL" '. | . + { "COURSE_EMAIL": $COURSE_EMAIL }' "$lms_env_file" > tmp.json && mv tmp.json "$lms_env_file"
 
-      #tutor build 
+      # Fix: github.com/edx/* repos moved to github.com/openedx/*
+      echo "Fixing edx -> openedx GitHub URLs in Dockerfiles..."
+      find "$(tutor config printroot)/env" -name "Dockerfile" -exec \
+        sed -i 's|github\.com/edx/|github.com/openedx/|g' {} +
+
+      #tutor build
       tutor local start -d
 
       # tutor migrate
-      tutor local init 
+      tutor local init
 
       # update lms and lms worker docker image
       YAML_FILE=".local/share/tutor/env/local/docker-compose.yml"
       NEW_IMAGE="7503444967/maple-edx-server:volume-final.1.5-without-pmmmt"
 
       # Use sed to replace the image line for the 'lms' service
-      sed -i "/^ *lms:/,/^ *[^ ]/ s|image: docker.io/overhangio/openedx:13.1.5|image: $NEW_IMAGE|" "$YAML_FILE"  
-      sed -i "/^ *lms-worker:/,/^ *[^ ]/ s|image: docker.io/overhangio/openedx:13.1.5|image: $NEW_IMAGE|" "$YAML_FILE" 
+      sed -i "/^ *lms:/,/^ *[^ ]/ s|image: docker.io/overhangio/openedx:13.1.5|image: $NEW_IMAGE|" "$YAML_FILE"
+      sed -i "/^ *lms-worker:/,/^ *[^ ]/ s|image: docker.io/overhangio/openedx:13.1.5|image: $NEW_IMAGE|" "$YAML_FILE"
 
-      # tutor settheme 
-      tutor local settheme edx-reborn-indigo 
+      # tutor settheme
+      tutor local settheme edx-reborn-indigo
 
       # tutor restart
       tutor local stop && tutor local start -d
